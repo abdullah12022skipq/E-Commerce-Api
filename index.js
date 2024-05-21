@@ -9,8 +9,11 @@ const productRoutes = require("./routes/products");
 const cartRoutes = require("./routes/carts");
 const orderRoutes = require("./routes/orders");
 const errorHandler = require("./errors/errorHandler");
+const { swaggerUi, specs } = require("./swagger/swaggerConfig");
 
 app.use(express.json());
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.post("/register", register);
 app.post("/login", login);
