@@ -1,6 +1,6 @@
 # E-commerce API
 
-This is a simple E-commerce API built using Node.js and Express. The API provides functionalities for product management, cart management, order placement, authentication, and authorization. Data is persisted using Supabase.
+This is an E-commerce API built using Node.js and Express. The API provides functionalities for product management, cart management, order placement, authentication, and authorization. Data is persisted using Supabase.
 
 ## Table of Contents
 
@@ -63,278 +63,62 @@ This is a simple E-commerce API built using Node.js and Express. The API provide
 
 2. The API will be available at `http://localhost:3000`.
 
+## OR
+
+## Base URL
+
+The API is deployed on Railway Cloud and can be accessed at:    `https://e-commerce-api-production-dc2f.up.railway.app`
+
 ## API Endpoints
 
-### Authentication
+### User Registration
+#### POST /auth/register
+![User Registration](docs/screenshots/register.png)
 
-- **Register a new user**
+### User Login
+#### POST /auth/login
+![User Login](docs/screenshots/login.png)
 
-    ```http
-    POST /register
-    ```
+### Create a New Product
+#### POST /products
+![Create Product](docs/screenshots/create_product.png)
 
-    Request Body:
+### Retrieve All Products
+#### GET /products
+![Retrieve Products](docs/screenshots/retrieve_products.png)
 
-    ```json
-    {
-      "email": "user@example.com",
-      "password": "password123"
-    }
-    ```
+### Update a Product
+#### PUT /products/:id
+![Update Product](docs/screenshots/update_product.png)
 
-    Response:
+### Delete a Product
+#### DELETE /products/:id
+![Delete Product](docs/screenshots/delete_product.png)
 
-    ```json
-    {
-      "message": "User registered successfully"
-    }
-    ```
+### Create a New Cart
+#### POST /carts
+![Create Cart](docs/screenshots/create_cart.png)
 
-- **Login**
+### Add a Product to the Cart
+#### POST /carts/:cartId/products
+![Add Product to Cart](docs/screenshots/add_product_to_cart.png)
 
-    ```http
-    POST /login
-    ```
+### Remove a Product from the Cart
+#### DELETE /carts/:cartId/products/:productId
+![Remove Product from Cart](docs/screenshots/remove_product_from_cart.png)
 
-    Request Body:
+### Retrieve Cart Contents
+#### GET /carts/:cartId
+![Retrieve Cart Contents](docs/screenshots/retrieve_cart_contents.png)
 
-    ```json
-    {
-      "email": "user@example.com",
-      "password": "password123"
-    }
-    ```
+### Place an Order
+#### POST /orders/:cartId
+![Place Order](docs/screenshots/place_order.png)
 
-    Response:
+### Retrieve Order Details
+#### GET /orders/:orderId
+![Retrieve Order Details](docs/screenshots/retrieve_order_details.png)
 
-    ```json
-    {
-      "token": "jwt-token"
-    }
-    ```
-
-### Product Management
-
-- **Create a new product**
-
-    ```http
-    POST /products
-    ```
-
-    Request Body:
-
-    ```json
-    {
-      "name": "Product Name",
-      "description": "Product Description",
-      "price": 100,
-      "category": "Category"
-    }
-    ```
-
-    Response:
-
-    ```json
-    {
-      "id": 1,
-      "name": "Product Name",
-      "description": "Product Description",
-      "price": 100,
-      "category": "Category"
-    }
-    ```
-
-- **Retrieve all products or filter by category**
-
-    ```http
-    GET /products
-    GET /products?category=Category
-    ```
-
-    Response:
-
-    ```json
-    [
-      {
-        "id": 1,
-        "name": "Product Name",
-        "description": "Product Description",
-        "price": 100,
-        "category": "Category"
-      }
-    ]
-    ```
-
-- **Update product details**
-
-    ```http
-    PUT /products/:id
-    ```
-
-    Request Body:
-
-    ```json
-    {
-      "name": "Updated Product Name",
-      "description": "Updated Product Description",
-      "price": 150,
-      "category": "Updated Category"
-    }
-    ```
-
-    Response:
-
-    ```json
-    {
-      "message": "Product updated successfully",
-      "product": {
-        "id": 1,
-        "name": "Updated Product Name",
-        "description": "Updated Product Description",
-        "price": 150,
-        "category": "Updated Category"
-      }
-    }
-    ```
-
-- **Delete a product**
-
-    ```http
-    DELETE /products/:id
-    ```
-
-    Response:
-
-    ```json
-    {
-      "message": "Product deleted successfully"
-    }
-    ```
-
-### Cart Management
-
-- **Create a new cart**
-
-    ```http
-    POST /carts
-    ```
-
-    Response:
-
-    ```json
-    {
-      "id": 1,
-      "user_id": 1
-    }
-    ```
-
-- **Add a product to the cart**
-
-    ```http
-    POST /carts/:cartId/products
-    ```
-
-    Request Body:
-
-    ```json
-    {
-      "productId": 1,
-      "quantity": 2
-    }
-    ```
-
-    Response:
-
-    ```json
-    {
-      "cart_id": 1,
-      "product_id": 1,
-      "quantity": 2
-    }
-    ```
-
-- **Remove a product from the cart**
-
-    ```http
-    DELETE /carts/:cartId/products/:productId
-    ```
-
-    Response:
-
-    ```json
-    {
-      "message": "Product removed from cart"
-    }
-    ```
-
-- **Retrieve cart contents**
-
-    ```http
-    GET /carts/:cartId
-    ```
-
-    Response:
-
-    ```json
-    [
-      {
-        "product_id": 1,
-        "quantity": 2,
-        "product": {
-          "id": 1,
-          "name": "Product Name",
-          "description": "Product Description",
-          "price": 100,
-          "category": "Category"
-        }
-      }
-    ]
-    ```
-
-### Order Placement
-
-- **Place an order by converting the contents of the user's cart into an order**
-
-    ```http
-    POST /orders/:cartId
-    ```
-
-    Response:
-
-    ```json
-    {
-      "message": "Order placed successfully",
-      "orderId": 1
-    }
-    ```
-
-- **Retrieve order details by order ID**
-
-    ```http
-    GET /orders/:orderId
-    ```
-
-    Response:
-
-    ```json
-    {
-      "id": 1,
-      "total_cost": 200,
-      "created_at": "2024-01-01T00:00:00Z",
-      "order_items": [
-        {
-          "product_id": 1,
-          "quantity": 2,
-          "product": {
-            "name": "Product Name",
-            "description": "Product Description",
-            "price": 100,
-            "category": "Category"
-          }
-        }
-      ]
-    }
-    ```
 
 ## Error Handling
 
